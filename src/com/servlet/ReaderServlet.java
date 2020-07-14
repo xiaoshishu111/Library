@@ -1,11 +1,9 @@
 package com.servlet;
 
-import com.domain.Book;
 import com.domain.Reader;
-import com.enums.BookStatusEnum;
 import com.enums.ReaderAuthortyEnum;
 import com.service.IReaderService;
-import com.serviceimpl.ReaderService;
+import com.service.impl.ReaderService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,16 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
 import java.util.UUID;
 
 @WebServlet(name = "ReaderServlet",urlPatterns = "/readerservlet")
 public class ReaderServlet extends HttpServlet {
     private IReaderService readerService=new ReaderService();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
-        response.setCharacterEncoding("utf-8");
-        response.setContentType("text/html;charset=utf-8");
         String action=request.getParameter("action");
         switch (action) {
             case "add":

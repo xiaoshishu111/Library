@@ -1,12 +1,9 @@
 package cn.base.java;
 
-import com.daoimpl.BookDao;
-import com.domain.Book;
 import com.domain.Reader;
 import com.enums.ReaderAuthortyEnum;
 import com.service.IReaderService;
-import com.serviceimpl.BookService;
-import com.serviceimpl.ReaderService;
+import com.service.impl.ReaderService;
 
 import java.util.List;
 

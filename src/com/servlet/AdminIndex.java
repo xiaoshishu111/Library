@@ -1,16 +1,13 @@
 package com.servlet;
 
-import com.before.ShowAllBooksServlet;
-import com.domain.Book;
 import com.domain.Lend;
 import com.domain.Reader;
 import com.service.IBookService;
 import com.service.ILendService;
 import com.service.IReaderService;
-import com.serviceimpl.BookService;
-import com.serviceimpl.LendService;
-import com.serviceimpl.ReaderService;
-import com.util.PageBean;
+import com.service.impl.BookService;
+import com.service.impl.LendService;
+import com.service.impl.ReaderService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,9 +24,6 @@ public class AdminIndex extends HttpServlet {
     private IReaderService readerService=new ReaderService();
     private ILendService lendService=new LendService();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
-        response.setCharacterEncoding("utf-8");
-        response.setContentType("text/html;charset=utf-8");
         String choice=request.getParameter("choice");
         switch (choice) {
             case "1":

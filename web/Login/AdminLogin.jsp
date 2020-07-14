@@ -12,7 +12,7 @@
     <title>Title</title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/loginservlet?action=1" method="post">
+<form action="${pageContext.request.contextPath}/userservlet?action=adminLogin" method="post">
     请填写您的账号：<input id="readerAccount" type="text" name="readerAccount"><br>
     请填写您的密码：<input id="readerPassword" type="text" name="readerPassword"><br>
     <input type="submit" >
@@ -26,6 +26,5 @@
 <c:if test="${isreader=='2'}">
     <span>您的密码有误</span>
 </c:if>
-
 </body>
 </html>

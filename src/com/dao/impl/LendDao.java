@@ -1,4 +1,4 @@
-package com.daoimpl;
+package com.dao.impl;
 
 import com.dao.ILendDao;
 import com.domain.Book;

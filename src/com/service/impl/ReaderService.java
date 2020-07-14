@@ -1,15 +1,10 @@
-package com.serviceimpl;
+package com.service.impl;
 
-import com.daoimpl.ReaderDao;
-import com.daoimpl.ReaderDao;
-import com.domain.Book;
-import com.domain.Reader;
+import com.dao.impl.ReaderDao;
 import com.domain.Reader;
 import com.service.IReaderService;
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Scanner;
 
 public class ReaderService implements IReaderService {
 

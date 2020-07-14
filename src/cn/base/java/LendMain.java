@@ -1,16 +1,11 @@
 package cn.base.java;
 
 import com.dao.ILendDao;
-import com.daoimpl.LendDao;
-import com.domain.Book;
+import com.dao.impl.LendDao;
 import com.domain.Lend;
-import com.service.IBookService;
 import com.service.ILendService;
-import com.serviceimpl.BookService;
-import com.serviceimpl.LendService;
+import com.service.impl.LendService;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 public class LendMain {

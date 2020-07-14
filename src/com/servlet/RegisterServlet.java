@@ -1,10 +1,8 @@
 package com.servlet;
 
 import com.domain.Reader;
-import com.service.IBookService;
 import com.service.IReaderService;
-import com.serviceimpl.BookService;
-import com.serviceimpl.ReaderService;
+import com.service.impl.ReaderService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

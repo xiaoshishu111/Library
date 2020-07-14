@@ -1,17 +1,11 @@
-package com.serviceimpl;
+package com.service.impl;
 
-import com.dao.IReaderDao;
-import com.daoimpl.BookDao;
-import com.daoimpl.LendDao;
-import com.daoimpl.ReaderDao;
-import com.domain.Book;
+import com.dao.impl.BookDao;
+import com.dao.impl.LendDao;
+import com.dao.impl.ReaderDao;
 import com.domain.Lend;
-import com.domain.Reader;
-import com.enums.BookStatusEnum;
 import com.service.ILendService;
 
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;

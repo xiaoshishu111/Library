@@ -1,10 +1,9 @@
 package com.servlet;
 
-import com.before.ShowAllBooksServlet;
 import com.domain.Book;
 import com.enums.BookStatusEnum;
 import com.service.IBookService;
-import com.serviceimpl.BookService;
+import com.service.impl.BookService;
 import com.util.PageBean;
 
 import javax.servlet.ServletException;
@@ -15,18 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.UUID;
 
 @WebServlet(name = "BookServlet",urlPatterns = "/bookservlet")
 public class BookServlet extends HttpServlet {
     private IBookService bookService=new BookService();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
-        response.setCharacterEncoding("utf-8");
-        response.setContentType("text/html;charset=utf-8");
         String action=request.getParameter("action");
         switch (action) {
             case "add":

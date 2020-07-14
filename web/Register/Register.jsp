@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-        <form action="${pageContext.request.contextPath}/registerservlet" method="post">
+        <form action="${pageContext.request.contextPath}/userservlet?action=register" method="post">
             请输入您的姓名：<input id="readerName" type="text" name="readerAccount"><br>
             请输入您的账号：<input id="readerAccount" type="text" name="readerName"><br>
             请输入您的密码：<input id="readerPassword" type="text" name="readerPassword"><br>

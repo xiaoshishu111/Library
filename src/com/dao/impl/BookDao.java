@@ -1,8 +1,7 @@
-package com.daoimpl;
+package com.dao.impl;
 
 import com.dao.IBookDao;
 import com.domain.Book;
-import com.domain.User;
 import com.util.JDBCutils;
 
 import java.math.BigDecimal;

@@ -1,14 +1,13 @@
-package com.serviceimpl;
+package com.service.impl;
 
-import com.daoimpl.BookDao;
+import com.constants.Constants;
+import com.dao.impl.BookDao;
 import com.domain.Book;
-import com.enums.BookStatusEnum;
 import com.service.IBookService;
 import com.util.PageBean;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Scanner;
 
 public class BookService implements IBookService {
 
@@ -50,7 +49,7 @@ public class BookService implements IBookService {
 
     @Override
     public PageBean<Book> searchPageBook(Book book,BigDecimal price01,BigDecimal price02,int currentPage) throws Exception {
-        int currentCount=10;
+        int currentCount= Constants.CURRENTCOUNT;
         int totalCount=bookDao.countSearchedBooks(book,price01,price02);
         int result=totalCount%currentCount;
         int totalPage;
