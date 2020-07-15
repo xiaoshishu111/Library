@@ -25,6 +25,7 @@ public class BookServlet extends HttpServlet {
         switch (action) {
             case "add":
                 add(request,response);
+                //hello
                 break;
             case "delete":
                 delete(request,response);
