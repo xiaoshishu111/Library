@@ -2,6 +2,7 @@ package com.service;
 
 import com.domain.Book;
 import com.util.PageBean;
+import vo.BookVO;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -17,10 +18,6 @@ public interface IBookService {
     List<Book> findAllbooks() throws Exception;
     //查询单本书的信息
     Book findBook(String bookId) throws Exception;
-    //根据模糊查询搜索书本
-    PageBean<Book> searchPageBook(Book book, BigDecimal price01,BigDecimal price02,int currentPage) throws Exception;
-    //根据当前页来返回一条pagebean
-    PageBean<Book> pageBook(int currentPage) throws Exception;
-
-
+    //根据查询条件返回一条分页对象
+    PageBean<Book> searchPageReader(BookVO bookVO) throws Exception;
 }

@@ -23,6 +23,6 @@
 <c:if test="${isreader=='1'}">
     <span>您的密码有误</span>
 </c:if>
-<div><a href="Login/AdminLogin.jsp">进入管理员登陆界面</a></div>
+<div><a href="${pageContext.request.contextPath}/Login/AdminLogin.jsp">进入管理员登陆界面</a></div>
 </body>
 </html>

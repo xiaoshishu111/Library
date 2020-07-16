@@ -1,8 +1,10 @@
 package com.service;
 
-import com.domain.Book;
 import com.domain.Reader;
+import com.util.PageBean;
+import vo.PageReaderSearch;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface IReaderService {
@@ -19,4 +21,6 @@ public interface IReaderService {
     Reader findReader(String readerId) throws Exception;
     //根据账号查询读者信息
     Reader findReaderByAccount(String readerAccount) throws Exception;
+    //根据查询参数查询读者数据，并最终返回一条分页对象
+    PageBean<Reader> searchPageReader(PageReaderSearch pageReaderSearch,int currentCount,int currentPage) throws SQLException;
 }

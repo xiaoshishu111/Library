@@ -113,16 +113,14 @@ public class LendDao implements ILendDao {
         Connection connection = JDBCutils.getConnection();
         //输入sql语句
         String sql="UPDATE t_lend"+
-                " SET bookId=?,readerId=?,begintime=?,endtime=?" +
-                "WHERE lendId=?";
+                " SET endtime=? " +
+                "WHERE readerId=? and bookId=? and endtime is null ";
         //创建预处理执行对象
         PreparedStatement pstmt=connection.prepareStatement(sql);
         //给？赋值
-        pstmt.setObject(1,lend.getBookId());
+        pstmt.setObject(3,lend.getBookId());
         pstmt.setObject(2,lend.getReaderId());
-        pstmt.setObject(3,lend.getBeginTime());
-        pstmt.setObject(4,lend.getEndTime());
-        pstmt.setObject(5,lend.getLendId());
+        pstmt.setObject(1,lend.getEndTime());
         //执行sql语句
         pstmt.executeUpdate();
         //释放资源

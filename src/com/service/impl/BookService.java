@@ -5,13 +5,14 @@ import com.dao.impl.BookDao;
 import com.domain.Book;
 import com.service.IBookService;
 import com.util.PageBean;
+import vo.BookVO;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public class BookService implements IBookService {
 
-    private BookDao bookDao=new BookDao();
+    private BookDao bookDao = new BookDao();
 
 
     @Override
@@ -20,20 +21,16 @@ public class BookService implements IBookService {
     }
 
 
-
     @Override
     public void deleteBook(String bookId) throws Exception {
         bookDao.delete(bookId);
     }
 
 
-
     @Override
     public void updateBook(Book book) throws Exception {
         bookDao.update(book);
     }
-
-
 
 
     @Override
@@ -48,36 +45,8 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public PageBean<Book> searchPageBook(Book book,BigDecimal price01,BigDecimal price02,int currentPage) throws Exception {
-        int currentCount= Constants.CURRENTCOUNT;
-        int totalCount=bookDao.countSearchedBooks(book,price01,price02);
-        int result=totalCount%currentCount;
-        int totalPage;
-        if (result==0){
-            totalPage=totalCount/currentCount;
-        }else {
-            totalPage=(totalCount/currentCount)+1;
-        }
-        List<Book> books=bookDao.searchBooks(book,price01,price02,currentPage,currentCount);
-        PageBean<Book> bookPageBean=new PageBean<>(currentPage,currentCount,totalPage,totalCount,books);
-        return bookPageBean;
-    }
-
-    @Override
-    public PageBean<Book> pageBook(int currentPage) throws Exception {
-        int currentCount=10;
-        int totalCount=bookDao.countAllBooks();
-        //通过求余求总页数
-        int result=totalCount%currentCount;
-        int totalPage;
-        if (result==0){
-            totalPage=totalCount/currentCount;
-        }else {
-            totalPage=(totalCount/currentCount)+1;
-        }
-        List<Book> books=bookDao.findPageBooks(currentPage,currentCount);
-        PageBean<Book> bookPageBean=new PageBean<>(currentPage,currentCount,totalPage,totalCount,books);
-        return bookPageBean;
+    public PageBean<Book> searchPageReader(BookVO bookVO) throws Exception {
+        return bookDao.findPageReader(bookVO);
     }
 
 

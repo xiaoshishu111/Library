@@ -14,7 +14,7 @@
 </head>
 <body>
 <h5>欢迎管理员：${sessionScope.Admin.getReaderName()}</h5>
-<form action="${pageContext.request.contextPath}/adminindex?currentPage=1" method="post">
+<form action="${pageContext.request.contextPath}/adminindex" method="post">
     <h1>图书馆管理员系统</h1>
     请输入您要选择的功能：<br>
     <label><input type="radio" name="choice" value="1">图书管理</label><br>

@@ -21,4 +21,14 @@ public class LendService implements ILendService {
     public List<Lend> findAllLends() throws Exception {
         return lendDao.findAll();
     }
+
+    @Override
+    public void saveLend(Lend lend) throws Exception {
+        lendDao.save(lend);
+    }
+
+    @Override
+    public void updateLend(Lend lend) throws Exception {
+        lendDao.update(lend);
+    }
 }

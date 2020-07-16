@@ -1,6 +1,8 @@
 package com.dao;
 
 import com.domain.Book;
+import com.util.PageBean;
+import vo.BookVO;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -17,12 +19,6 @@ public interface IBookDao {
     List<Book> findAll() throws Exception;
     //查询某条数据
     Book findById(String bookId) throws Exception;
-    //模糊查询
-    List<Book> searchBooks(Book book,BigDecimal price01, BigDecimal price02,int currentPage,int pageSize) throws Exception;
-    //查询所有书的个数
-    int countAllBooks() throws Exception;
-    //返回当前页的books集合
-    List<Book> findPageBooks(int currentPage,int currentCount) throws Exception;
-    //查询搜索后书的个数
-    int countSearchedBooks(Book book,BigDecimal price01,BigDecimal price02) throws Exception;
+    //根据查询条件返回一条分页对象
+    PageBean<Book> findPageReader(BookVO bookVO) throws Exception;
 }

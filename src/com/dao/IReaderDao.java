@@ -1,8 +1,9 @@
 package com.dao;
 
-import com.domain.Book;
 import com.domain.Reader;
+import vo.PageReaderSearch;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface IReaderDao {
@@ -18,4 +19,8 @@ public interface IReaderDao {
     Reader findById(String readerId) throws Exception;
     //根据账号查询数据
     Reader findByAccount(String readerAccount) throws Exception;
+    //根据查询参数对象、每页数据条数、当前页，返回搜索到的读者数据集
+    List<Reader> findReaders(PageReaderSearch pageReaderSearch,int currentCount,int currentPage) throws SQLException;
+    //查询搜索后的读者数据总条数
+    int countSearchReaders(PageReaderSearch pageReaderSearch) throws SQLException;
 }

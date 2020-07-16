@@ -4,7 +4,7 @@ import com.domain.Book;
 
 import java.util.List;
 
-public class PageBean<T> {
+public class PageBean<T>{
     //当前页
     private int currentPage;
     //当前条数
@@ -19,7 +19,7 @@ public class PageBean<T> {
     public PageBean(int currentPage, int currentCount, int totalPage, int totalCount, List<T> beans) {
         this.currentPage = currentPage;
         this.currentCount = currentCount;
-        this.totalPage = totalPage;
+        this.totalPage = totalCount%currentCount==0 ? totalCount/currentCount:totalCount/currentCount+1;
         this.totalCount = totalCount;
         this.beans = beans;
     }
@@ -63,4 +63,6 @@ public class PageBean<T> {
     public void setBeans(List<T> beans) {
         this.beans = beans;
     }
+
+
 }

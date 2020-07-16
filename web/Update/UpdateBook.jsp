@@ -6,10 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%--<%@ page contentType="text/html;charset=gb2312" language="java" %>--%>
+
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%--<%@ page language="java" contentType="text/html; charset=UTF-8"--%>
-<%--         pageEncoding="UTF-8"%>--%>
 <%@page contentType="text/html;charset=utf-8" language="java" %>
 
 <meta http-equiv=”Content-Type” content=”text/html; charset=utf-8″>
@@ -35,16 +33,11 @@
         }
 
         window.onload = function () {
-            // var href = window.location.href;
-            // alert(href);
             var bookId = GetQueryString("bookId");
-            // alert(bookId);
             var bookName = GetQueryString("bookName");
-
             var bookAuthor = GetQueryString("bookAuthor");
             var price = GetQueryString("price");
             var status = GetQueryString("status");
-            alert(status);
 
             document.getElementById("bookId").value = bookId;
             document.getElementById("bookName").value = bookName;

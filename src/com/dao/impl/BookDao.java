@@ -3,6 +3,8 @@ package com.dao.impl;
 import com.dao.IBookDao;
 import com.domain.Book;
 import com.util.JDBCutils;
+import com.util.PageBean;
+import vo.BookVO;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -11,285 +13,204 @@ import java.util.List;
 
 public class BookDao implements IBookDao {
     @Override
-    public void save(Book book) throws Exception{
+    public void save(Book book) throws Exception {
         //创建连接
         Connection connection = JDBCutils.getConnection();
         //输入sql语句
-        String sql="insert into t_book values (?,?,?,?,?)";
+        String sql = "insert into t_book values (?,?,?,?,?)";
         //创建预处理执行对象
-        PreparedStatement pstmt=connection.prepareStatement(sql);
+        PreparedStatement pstmt = connection.prepareStatement(sql);
         //给？赋值
-        pstmt.setObject(1,book.getBookId());
-        pstmt.setObject(2,book.getBookName());
-        pstmt.setObject(3,book.getBookAuthor());
-        pstmt.setObject(4,book.getPrice());
-        pstmt.setObject(5,book.getStatus());
+        pstmt.setObject(1, book.getBookId());
+        pstmt.setObject(2, book.getBookName());
+        pstmt.setObject(3, book.getBookAuthor());
+        pstmt.setObject(4, book.getPrice());
+        pstmt.setObject(5, book.getStatus());
         //执行sql语句
         pstmt.executeUpdate();
         //释放资源
 //        pstmt.close();
 //        connection.close();
-        JDBCutils.close(connection,pstmt,null);
+        JDBCutils.close(connection, pstmt, null);
     }
 
     @Override
-    public void delete(String bookId) throws Exception{
+    public void delete(String bookId) throws Exception {
         //创建连接
         Connection connection = JDBCutils.getConnection();
         //输入sql语句
-        String sql="delete from t_book where bookId=?";
+        String sql = "delete from t_book where bookId=?";
         //创建预处理执行对象
-        PreparedStatement pstmt=connection.prepareStatement(sql);
+        PreparedStatement pstmt = connection.prepareStatement(sql);
         //给？赋值
-        pstmt.setObject(1,bookId);
+        pstmt.setObject(1, bookId);
         //执行sql语句
         pstmt.executeUpdate();
         //释放资源
-        JDBCutils.close(connection,pstmt,null);
+        JDBCutils.close(connection, pstmt, null);
     }
 
 
     @Override
-    public void update(Book book) throws Exception{
+    public void update(Book book) throws Exception {
         //创建连接
         Connection connection = JDBCutils.getConnection();
         //输入sql语句
-        String sql="UPDATE t_book"+
+        String sql = "UPDATE t_book" +
                 " SET bookName=?,bookAuthor=?,price=?,status=? " +
                 "WHERE bookId=?;";
         //创建预处理执行对象
-        PreparedStatement pstmt=connection.prepareStatement(sql);
+        PreparedStatement pstmt = connection.prepareStatement(sql);
         //给？赋值
-        pstmt.setObject(1,book.getBookName());
-        pstmt.setObject(2,book.getBookAuthor());
-        pstmt.setObject(3,book.getPrice());
-        pstmt.setObject(4,book.getStatus());
-        pstmt.setObject(5,book.getBookId());
+        pstmt.setObject(1, book.getBookName());
+        pstmt.setObject(2, book.getBookAuthor());
+        pstmt.setObject(3, book.getPrice());
+        pstmt.setObject(4, book.getStatus());
+        pstmt.setObject(5, book.getBookId());
         //执行sql语句
         pstmt.executeUpdate();
         //释放资源
-        JDBCutils.close(connection,pstmt,null);
+        JDBCutils.close(connection, pstmt, null);
     }
 
     @Override
-    public List<Book> findAll() throws Exception{
-        List<Book> list=new ArrayList<>();
+    public List<Book> findAll() throws Exception {
+        List<Book> list = new ArrayList<>();
         //创建连接
         Connection connection = JDBCutils.getConnection();
         //输入sql语句
-        String sql="select * from t_book";
+        String sql = "select * from t_book";
         //创建执行对象
-        Statement statement=connection.createStatement();
+        Statement statement = connection.createStatement();
         //执行sql语句
         ResultSet rs = statement.executeQuery(sql);
-        while(rs.next()){
+        while (rs.next()) {
             // 通过字段检索
-            String bookId  = rs.getString("bookId");
+            String bookId = rs.getString("bookId");
             String bookName = rs.getString("bookName");
             String bookAuthor = rs.getString("bookAuthor");
             BigDecimal price = rs.getBigDecimal("price");
             int status = rs.getInt("status");
             //添加到对象中
-            Book book=new Book(bookId,bookName,bookAuthor,price,status);
+            Book book = new Book(bookId, bookName, bookAuthor, price, status);
             list.add(book);
 
         }
         // 完成后释放资源
-        JDBCutils.close(connection,statement,rs);
+        JDBCutils.close(connection, statement, rs);
         return list;
     }
 
     @Override
-    public Book findById(String bookId) throws Exception{
-        Book book=null;
+    public Book findById(String bookId) throws Exception {
+        Book book = null;
         //创建连接
         Connection connection = JDBCutils.getConnection();
         //输入sql语句
-        String sql="select * from  t_book where bookId=?";
+        String sql = "select * from  t_book where bookId=?";
         //创建执行对象
-        PreparedStatement pstmt=connection.prepareStatement(sql);
+        PreparedStatement pstmt = connection.prepareStatement(sql);
         //给?赋值
-        pstmt.setObject(1,bookId);
+        pstmt.setObject(1, bookId);
         //执行sql语句
         ResultSet rs = pstmt.executeQuery();
-        while(rs.next()){
+        while (rs.next()) {
             // 通过字段检索
             String bookName = rs.getString("bookName");
             String bookAuthor = rs.getString("bookAuthor");
             BigDecimal price = rs.getBigDecimal("price");
             int status = rs.getInt("status");
             //添加到对象中
-            book=new Book(bookId,bookName,bookAuthor,price,status);
+            book = new Book(bookId, bookName, bookAuthor, price, status);
         }
         // 完成后释放资源
-        JDBCutils.close(connection,pstmt,rs);
+        JDBCutils.close(connection, pstmt, rs);
         return book;
     }
 
     @Override
-    public List<Book> searchBooks(Book book,BigDecimal price01,BigDecimal price02,int currentPage,int currentCount) throws Exception {
-        List<Book> list=new ArrayList<>();
+    public PageBean<Book> findPageReader(BookVO bookVO) throws Exception {
+        //创建list来存放book对象
+        List<Book> list = new ArrayList<>();
         //创建连接
         Connection connection = JDBCutils.getConnection();
-        PreparedStatement pstmt;
-        //输入sql语句
-        String sql="select * from t_book where 1=1 ";
-        List<Object> strings=new ArrayList<>();
-        if (!book.getBookName().equals("")){
-            sql+="and bookName like ? ";
-            String str="%"+book.getBookName()+"%";
-            strings.add(str);
-            System.out.println(sql);
+        //输入两条sql语句，一条求总个数，一条求分页的数据
+        String sql1="select count(*) from t_book where 1=1";
+        String sql2 = "select * from t_book where 1=1";
+        //用paraList存放?数据
+        List paraList = new ArrayList<>();
+        //对sql进行修改
+        if (!bookVO.getBookName().equals("")) {
+            sql1 += " and bookName like ?";
+            sql2 += " and bookName like ?";
+            String str = "%" + bookVO.getBookName() + "%";
+            paraList.add(str);
         }
-
-        if (!book.getBookAuthor().equals("")){
-            sql+="and bookAuthor like ? ";
-            String str="%"+book.getBookAuthor()+"%";
-            strings.add(str);
+        if (!bookVO.getBookAuthor().equals("")) {
+            sql1 += " and bookAuthor like ?";
+            sql2 += " and bookAuthor like ?";
+            String str = "%" + bookVO.getBookAuthor() + "%";
+            paraList.add(str);
         }
-
-        if (price01!=null && price02!=null){
-            sql+="and price between ? and ? ";
-            BigDecimal str1=price01;
-            BigDecimal str2=price02;
-            strings.add(str1);
-            strings.add(str2);
+        if (bookVO.getPriceMin() != null && bookVO.getPriceMax() != null) {
+            sql1 += " and price between ? and ?";
+            sql2 += " and price between ? and ?";
+            BigDecimal str1 = bookVO.getPriceMin();
+            BigDecimal str2 = bookVO.getPriceMax();
+            paraList.add(str1);
+            paraList.add(str2);
         }
-
-        if (book.getStatus()!=2){
-            sql+="and status=? ";
-            int str=book.getStatus();
-            strings.add(str);
+        if (bookVO.getStatus() != 2) {
+            sql1 += " and status=?";
+            sql2 += " and status=?";
+            int str = bookVO.getStatus();
+            paraList.add(str);
         }
-
-
-
+        //此次预编译求总个数
+        PreparedStatement pstmt1 = connection.prepareStatement(sql1);
+        int i=1;
+        for (Object object : paraList) {
+            pstmt1.setObject(i, object);
+            i++;
+        }
+        ResultSet rs1 = pstmt1.executeQuery();
+        rs1.next();
+        //获得总条数
+        int totalCount=rs1.getInt(1);
 
         //取出分页bean
-        sql+="limit ?,?";
-        int num1=(currentPage-1)*currentCount;
-        int num2=currentCount;
-        strings.add(num1);
-        strings.add(num2);
-
-        int j=1;
-        pstmt=connection.prepareStatement(sql);
-        for (Object object:strings){
-            pstmt.setObject(j,object);
+        sql2 += " limit ?,?";
+        int numBegin = (bookVO.getCurrentPage() - 1) * bookVO.getCurrentCount();
+        int numEnd = bookVO.getCurrentCount();
+        paraList.add(numBegin);
+        paraList.add(numEnd);
+        //开始预编译
+        PreparedStatement pstmt2 = connection.prepareStatement(sql2);
+        int j = 1;
+        for (Object object : paraList) {
+            pstmt2.setObject(j, object);
             j++;
         }
-        ResultSet rs = pstmt.executeQuery();
-        while(rs.next()){
+
+        ResultSet rs2 = pstmt2.executeQuery();
+        while (rs2.next()) {
             // 通过字段检索
-            String bookId  = rs.getString("bookId");
-            String bookName = rs.getString("bookName");
-            String bookAuthor = rs.getString("bookAuthor");
-            BigDecimal price = rs.getBigDecimal("price");
-            int status = rs.getInt("status");
+            String bookId = rs2.getString("bookId");
+            String bookName = rs2.getString("bookName");
+            String bookAuthor = rs2.getString("bookAuthor");
+            BigDecimal price = rs2.getBigDecimal("price");
+            int status = rs2.getInt("status");
             //添加到对象中
-            Book searchedbook=new Book(bookId,bookName,bookAuthor,price,status);
+            Book searchedbook = new Book(bookId, bookName, bookAuthor, price, status);
             list.add(searchedbook);
         }
         // 完成后释放资源
-        JDBCutils.close(connection,pstmt,rs);
-        return list;
+        JDBCutils.close(connection, pstmt1, rs2);
+        //封装分页对象
+        int totalPage=0;
+        PageBean<Book> bookPageBean=new PageBean<>(bookVO.getCurrentPage(),bookVO.getCurrentCount(),totalPage,totalCount,list);
+        return bookPageBean;
     }
 
-    @Override
-    public int countAllBooks() throws Exception {
-        //创建连接
-        Connection connection = JDBCutils.getConnection();
-        //输入sql语句
-        String sql="select count(*) from t_book";
-        //创建执行对象
-        Statement statement=connection.createStatement();
-        //执行sql语句
-        ResultSet rs = statement.executeQuery(sql);
-        rs.next();
-        int totalCount=rs.getInt(1);
-//        int totalCount=0;
-//        while (rs.next()){
-//            totalCount++;
-//        }
-        // 完成后释放资源
-        JDBCutils.close(connection,statement,rs);
-        return totalCount;
-    }
 
-    @Override
-    public List<Book> findPageBooks(int currentPage, int pageSize) throws Exception {
-        List<Book> books=new ArrayList<>();
-        //创建连接
-        Connection connection = JDBCutils.getConnection();
-        //输入sql语句
-        String sql="select * from  t_book limit ?,?";
-        //创建执行对象
-        PreparedStatement pstmt=connection.prepareStatement(sql);
-        //给?赋值
-        pstmt.setObject(1,(currentPage-1)*pageSize);
-        pstmt.setObject(2,pageSize);
-        //执行sql语句
-        ResultSet rs = pstmt.executeQuery();
-        while(rs.next()){
-            // 通过字段检索
-            String bookId=rs.getString("bookId");
-            String bookName = rs.getString("bookName");
-            String bookAuthor = rs.getString("bookAuthor");
-            BigDecimal price = rs.getBigDecimal("price");
-            int status = rs.getInt("status");
-            //添加到对象中
-            Book book=new Book(bookId,bookName,bookAuthor,price,status);
-            books.add(book);
-        }
-        // 完成后释放资源
-        JDBCutils.close(connection,pstmt,rs);
-        return books;
-    }
-
-    @Override
-    public int countSearchedBooks(Book book,BigDecimal price01,BigDecimal price02) throws Exception {
-        Connection connection = JDBCutils.getConnection();
-        PreparedStatement pstmt;
-        //输入sql语句
-        String sql="select * from t_book where 1=1 ";
-        List<Object> strings=new ArrayList<>();
-        if (!book.getBookName().equals("")){
-            sql+="and bookName like ? ";
-            String str="%"+book.getBookName()+"%";
-            strings.add(str);
-            System.out.println(sql);
-        }
-
-        if (!book.getBookAuthor().equals("")){
-            sql+="and bookAuthor like ? ";
-            String str="%"+book.getBookAuthor()+"%";
-            strings.add(str);
-        }
-
-        if (price01!=null && price02!=null){
-            sql+="and price between ? and ? ";
-            BigDecimal str1=price01;
-            BigDecimal str2=price02;
-            strings.add(str1);
-            strings.add(str2);
-        }
-
-        sql+="and status=? ";
-        int str=book.getStatus();
-        strings.add(str);
-
-        //计算总个数
-        int i=1;
-        pstmt=connection.prepareStatement(sql);
-        for (Object object:strings){
-            pstmt.setObject(i,object);
-            i++;
-        }
-        ResultSet rs = pstmt.executeQuery();
-        int totalCount=0;
-        while (rs.next()){
-            totalCount++;
-        }
-        return totalCount;
-    }
 }

@@ -9,8 +9,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+
 <html>
 <head>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.5.1.js"></script>
     <title>Title</title>
     <script>
 
@@ -45,22 +47,34 @@
                 input2.value = num2;
             };
         };
+
+        window.onload=function(){
+            var res=${sessionScope.status};
+            var opption=document.getElementById("sel");
+            if (res=="0"){
+                opption[1].selected=true;
+            }else if (res=="1"){
+                opption[2].selected=true;
+            }else {
+                opption[0].selected=true;
+            }
+        }
     </script>
 </head>
 <body>
     <form action="${pageContext.request.contextPath}/bookservlet?action=search&currentPage=1" method="post" onsubmit="return inputprice()">
-       <input type="text" placeholder="请输入书的名称：" name="bookName">
-       <input type="text" placeholder="请输入书的作者：" name="bookAuthor">
+       <input type="text" placeholder="请输入书的名称：" name="bookName" value="${sessionScope.bookName}">
+       <input type="text" placeholder="请输入书的作者：" name="bookAuthor" value="${sessionScope.bookAuthor}">
 
         <label >价格区间</label>
-        <input id="input1" type="text" oninput="inputChange(this)" onchange="compare()" name="price01" />
+        <input id="input1" type="text" oninput="inputChange(this)" onchange="compare()" name="priceMin" value="${sessionScope.priceMin}"/>
         <span class='m05'>-</span>
-        <input id="input2" type="text" oninput="inputChange(this)" onchange="compare()" name="price02" />
+        <input id="input2" type="text" oninput="inputChange(this)" onchange="compare()" name="priceMax" value="${sessionScope.priceMax}"/>
 
-        <select name="status">
-            <option value ="2" >所有的</option>
-            <option value ="0" >未借出</option>
-            <option value ="1" >已经被借出</option>
+        <select name="status" id="sel">
+            <option value ="2" id="sel1">所有的</option>
+            <option value ="0" id="sel2">未借出</option>
+            <option value ="1" id="sel3">已经被借出</option>
         </select>
 
         <input type="submit" value="查询" >
@@ -74,23 +88,23 @@
         <td>价格</td>
         <td>借阅状态</td>
     </tr>
-    <c:forEach items="${sessionScope.bookPageBean.getBeans()}" var="book">
+    <c:forEach items="${requestScope.bookPageBean.beans}" var="book">
     <tr>
 <%--        <td>${book.getBookId()}</td>--%>
         <td>${book.getBookName()}</td>
         <td>${book.getBookAuthor()}</td>
         <td>${book.getPrice()}</td>
         <td>${book.getStatus()==0 ? "未借出" : "已经被借出"}</td>
-        <td><a href="${pageContext.request.contextPath}/bookservlet?action=delete&bookId=${book.getBookId()}&currentPage=1">删除</a></td>
-        <td><a href="${pageContext.request.contextPath}/UpdateBook.jsp?bookId=${book.getBookId()}&bookName=${book.getBookName()}&bookAuthor=${book.getBookAuthor()}&price=${book.getPrice()}&status=${book.getStatus()}">修改</a></td>
+        <td><a href="${pageContext.request.contextPath}/bookservlet?action=delete&bookId=${book.getBookId()}">删除</a></td>
+        <td><a href="${pageContext.request.contextPath}/Service/UpdateBook.jsp?bookId=${book.getBookId()}&bookName=${book.getBookName()}&bookAuthor=${book.getBookAuthor()}&price=${book.getPrice()}&status=${book.getStatus()}">修改</a></td>
     </tr>
     </c:forEach>
 
     <tr>
         <td><a href="${pageContext.request.contextPath}/bookservlet?action=search&currentPage=1">首页</a></td>
-        <td><a href="${pageContext.request.contextPath}/bookservlet?action=search&currentPage=${sessionScope.bookPageBean.getCurrentPage()-1}">上一页</a></td>
-        <td><a href="${pageContext.request.contextPath}/bookservlet?action=search&currentPage=${sessionScope.bookPageBean.getCurrentPage()+1}">下一页</a></td>
-        <td><a href="${pageContext.request.contextPath}/bookservlet?action=search&currentPage=${sessionScope.bookPageBean.getTotalPage()}">尾页</a></td>
+        <td><a href="${pageContext.request.contextPath}/bookservlet?action=search&currentPage=${bookPageBean.getCurrentPage()-1}&totalPage=${bookPageBean.getTotalPage()}">上一页</a></td>
+        <td><a href="${pageContext.request.contextPath}/bookservlet?action=search&currentPage=${bookPageBean.getCurrentPage()+1}&totalPage=${bookPageBean.getTotalPage()}">下一页</a></td>
+        <td><a href="${pageContext.request.contextPath}/bookservlet?action=search&currentPage=${bookPageBean.getTotalPage()}">尾页</a></td>
     </tr>
 
 
@@ -106,6 +120,6 @@
     </form>
 
 </table>
-
+    <a href="${pageContext.request.contextPath}/bookservlet?action=backAdmin">返回主界面</a>
 </body>
 </html>

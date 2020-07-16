@@ -27,19 +27,10 @@ public class AdminIndex extends HttpServlet {
         String choice=request.getParameter("choice");
         switch (choice) {
             case "1":
-//                request.setAttribute("currentPage",1);
-//                request.setAttribute("action","page");
-                request.getRequestDispatcher("bookservlet?action=search&currentPage=1&status=2").forward(request,response);
-//                response.sendRedirect("bookservlet");
+                request.getRequestDispatcher("bookservlet?action=search&currentPage=1").forward(request,response);
                 break;
             case "2":
-                try {
-                    List<Reader> readers=readerService.findAllReaders();
-                    request.setAttribute("readers",readers);
-                    request.getRequestDispatcher("ReaderManage.jsp").forward(request,response);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                request.getRequestDispatcher("readerservlet?action=search&currentPage=1").forward(request,response);
                 break;
             case "3":
                 try {
